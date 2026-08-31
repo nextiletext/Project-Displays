@@ -105,10 +105,31 @@
 
         // Displays a pop-up only for iOS web users
         if (isIOS && !isStandalone) {
-            alert("To save this hub to your iPhone home screen:\n\n1. Tap the Share icon in Safari.\n2. Tap 'Add to Home Screen'.");
+            alert("If you want to save this space to your iPhone home screen:\n\n1. Tap the Share icon in Safari.\n2. Tap 'Add to Home Screen'.");
         }
     });
 </script>
+<script>
+    let deferredPrompt;
 
+    // Detects Android Chrome / Edge install availability
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        // Prompt the user to install your main app hub
+        const installApp = confirm("Would you like to install My Projects App to your home screen?");
+        
+        if (installApp) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User installed the app');
+                }
+                deferredPrompt = null;
+            });
+        }
+    });
+</script>
 </body>
 </html>
