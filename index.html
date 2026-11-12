@@ -187,70 +187,120 @@
             color: #d2a8ff;
         }
 
-        /* Floating Rotary Volume Knob Dock */
-        .knob-dock {
+        /* Floating Glassmorphic Audio Dock */
+        .audio-dock {
             position: fixed;
-            bottom: 20px;
+            bottom: 22px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             background: rgba(22, 27, 34, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(48, 54, 61, 0.9);
             border-radius: 999px;
-            padding: 8px 18px;
+            padding: 8px 16px;
             box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 15px rgba(88, 166, 255, 0.12);
             z-index: 100;
             user-select: none;
-            touch-action: none;
+            transition: border-color 0.2s ease;
         }
 
-        .knob-label {
+        .audio-dock:hover {
+            border-color: rgba(88, 166, 255, 0.5);
+        }
+
+        .ctrl-btn {
+            background: rgba(33, 38, 45, 0.9);
+            color: #58a6ff;
+            border: 1px solid rgba(88, 166, 255, 0.35);
+            border-radius: 999px;
+            padding: 6px 13px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .ctrl-btn:hover {
+            background: rgba(88, 166, 255, 0.2);
+            border-color: #58a6ff;
+            color: #f0f6fc;
+        }
+
+        .ctrl-btn:active {
+            transform: scale(0.95);
+        }
+
+        .ctrl-btn.muted {
+            color: #f85149;
+            border-color: rgba(248, 81, 73, 0.45);
+            background: rgba(248, 81, 73, 0.12);
+        }
+
+        .ctrl-btn.muted:hover {
+            background: rgba(248, 81, 73, 0.25);
+            border-color: #f85149;
+        }
+
+        .divider {
+            width: 1px;
+            height: 18px;
+            background: rgba(48, 54, 61, 0.9);
+        }
+
+        .volume-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="range"].volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 95px;
+            height: 5px;
+            background: rgba(48, 54, 61, 0.9);
+            border-radius: 999px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"].volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #58a6ff;
+            border: 2px solid #090c10;
+            box-shadow: 0 0 8px rgba(88, 166, 255, 0.65);
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        input[type="range"].volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        input[type="range"].volume-slider::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #58a6ff;
+            border: 2px solid #090c10;
+            box-shadow: 0 0 8px rgba(88, 166, 255, 0.65);
+            cursor: pointer;
+        }
+
+        .vol-value {
             font-size: 0.78rem;
             font-weight: 600;
             color: #8b949e;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .knob-dial {
-            position: relative;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #2d333b, #161b22);
-            border: 2px solid #58a6ff;
-            box-shadow: 0 0 12px rgba(88, 166, 255, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.1);
-            cursor: ns-resize;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .knob-dial:active {
-            box-shadow: 0 0 18px rgba(88, 166, 255, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.15);
-        }
-
-        /* Glowing indicator line inside the knob */
-        .knob-indicator {
-            position: absolute;
-            top: 5px;
-            width: 3px;
-            height: 11px;
-            background: #79c0ff;
-            border-radius: 2px;
-            box-shadow: 0 0 6px #58a6ff;
-            transform-origin: 50% 15px;
-        }
-
-        .knob-value {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #f0f6fc;
-            min-width: 36px;
+            min-width: 34px;
             text-align: right;
             font-variant-numeric: tabular-nums;
         }
@@ -282,6 +332,22 @@
             .enter-btn {
                 font-size: 1.05rem;
                 padding: 18px 28px;
+            }
+            .audio-dock {
+                bottom: 16px;
+                padding: 8px 12px;
+                gap: 8px;
+            }
+            .ctrl-btn {
+                padding: 5px 10px;
+                font-size: 0.78rem;
+            }
+            input[type="range"].volume-slider {
+                width: 72px;
+            }
+            .vol-value {
+                font-size: 0.72rem;
+                min-width: 30px;
             }
         }
     </style>
@@ -351,28 +417,33 @@
         </div>
     </div>
 
-    <!-- Floating Rotary Volume Knob -->
-    <div class="knob-dock">
-        <span class="knob-label">Vol</span>
-        <div id="volumeKnob" class="knob-dial" title="Drag up/down or scroll to adjust volume">
-            <div id="knobIndicator" class="knob-indicator"></div>
+    <!-- Floating Audio Control Dock -->
+    <div class="audio-dock">
+        <button id="playStopBtn" class="ctrl-btn">Stop</button>
+        <button id="muteBtn" class="ctrl-btn">Mute</button>
+        <div class="divider"></div>
+        <div class="volume-wrap">
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.4">
+            <span id="volValue" class="vol-value">40%</span>
         </div>
-        <span id="knobValue" class="knob-value">40%</span>
     </div>
 
     <script>
         let audioCtx;
         let masterGain;
         let isPlaying = false;
+        let isMuted = false;
         let chordInterval;
-        let volume = 0.4; // Default 40%
+        let savedVolume = 0.4;
 
         const entryOverlay = document.getElementById('entryOverlay');
         const enterBtn = document.getElementById('enterBtn');
         const mainContent = document.getElementById('mainContent');
-        const volumeKnob = document.getElementById('volumeKnob');
-        const knobIndicator = document.getElementById('knobIndicator');
-        const knobValue = document.getElementById('knobValue');
+
+        const playStopBtn = document.getElementById('playStopBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volValue = document.getElementById('volValue');
 
         // Dreamy Lo-Fi Maj7 / Min9 chord frequencies
         const chords = [
@@ -415,7 +486,8 @@
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 masterGain = audioCtx.createGain();
-                masterGain.gain.setValueAtTime(volume, audioCtx.currentTime);
+                const initialGain = isMuted ? 0 : parseFloat(volumeSlider.value);
+                masterGain.gain.setValueAtTime(initialGain, audioCtx.currentTime);
                 masterGain.connect(audioCtx.destination);
             }
             if (audioCtx.state === 'suspended') {
@@ -424,6 +496,7 @@
 
             if (isPlaying) return;
             isPlaying = true;
+            playStopBtn.textContent = 'Stop';
 
             playChord(chords[chordIndex]);
             chordIndex = (chordIndex + 1) % chords.length;
@@ -434,6 +507,12 @@
             }, 3800);
         }
 
+        function stopChillAudio() {
+            isPlaying = false;
+            clearInterval(chordInterval);
+            playStopBtn.textContent = 'Play';
+        }
+
         // Click to Enter Handler
         enterBtn.addEventListener('click', () => {
             entryOverlay.classList.add('hidden');
@@ -441,48 +520,58 @@
             startChillAudio();
         });
 
-        // Rotary Knob Logic (-135deg = 0%, +135deg = 100%)
-        function updateKnobVisuals() {
-            const angle = -135 + (volume * 270);
-            knobIndicator.style.transform = `rotate(${angle}deg)`;
-            knobValue.textContent = `${Math.round(volume * 100)}%`;
+        // Play / Stop Toggle
+        playStopBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                stopChillAudio();
+            } else {
+                startChillAudio();
+            }
+        });
+
+        // Mute / Unmute Toggle
+        muteBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+
+            if (isMuted) {
+                savedVolume = parseFloat(volumeSlider.value) || 0.4;
+                volumeSlider.value = 0;
+                volValue.textContent = '0%';
+                muteBtn.textContent = 'Unmute';
+                muteBtn.classList.add('muted');
+                if (masterGain && audioCtx) {
+                    masterGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.04);
+                }
+            } else {
+                volumeSlider.value = savedVolume;
+                volValue.textContent = `${Math.round(savedVolume * 100)}%`;
+                muteBtn.textContent = 'Mute';
+                muteBtn.classList.remove('muted');
+                if (masterGain && audioCtx) {
+                    masterGain.gain.setTargetAtTime(savedVolume, audioCtx.currentTime, 0.04);
+                }
+            }
+        });
+
+        // Sliding Volume Control
+        volumeSlider.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            volValue.textContent = `${Math.round(val * 100)}%`;
+
+            if (val === 0) {
+                isMuted = true;
+                muteBtn.textContent = 'Unmute';
+                muteBtn.classList.add('muted');
+            } else {
+                isMuted = false;
+                savedVolume = val;
+                muteBtn.textContent = 'Mute';
+                muteBtn.classList.remove('muted');
+            }
 
             if (masterGain && audioCtx) {
-                masterGain.gain.setTargetAtTime(volume, audioCtx.currentTime, 0.05);
+                masterGain.gain.setTargetAtTime(val, audioCtx.currentTime, 0.04);
             }
-        }
-
-        // Initialize knob angle at 40%
-        updateKnobVisuals();
-
-        let isDragging = false;
-        let startY = 0;
-        let startVol = volume;
-
-        volumeKnob.addEventListener('pointerdown', (e) => {
-            isDragging = true;
-            startY = e.clientY;
-            startVol = volume;
-            volumeKnob.setPointerCapture(e.pointerId);
-        });
-
-        window.addEventListener('pointermove', (e) => {
-            if (!isDragging) return;
-            const deltaY = startY - e.clientY; // Drag up = louder, drag down = quieter
-            volume = Math.min(1, Math.max(0, startVol + deltaY / 120));
-            updateKnobVisuals();
-        });
-
-        window.addEventListener('pointerup', () => {
-            isDragging = false;
-        });
-
-        // Also support mouse scroll wheel on the knob
-        volumeKnob.addEventListener('wheel', (e) => {
-            e.preventDefault();
-            const step = e.deltaY < 0 ? 0.05 : -0.05;
-            volume = Math.min(1, Math.max(0, volume + step));
-            updateKnobVisuals();
         });
     </script>
 
