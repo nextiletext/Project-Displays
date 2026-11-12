@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Some of my projects</title>
+    <title>MY PROJECTS</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,12 +19,12 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 24px 16px;
         }
 
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 800px; /* Widened so the grid has room to breathe on desktop */
             text-align: center;
         }
 
@@ -34,24 +34,35 @@
             margin-bottom: 32px;
         }
 
+        /* Responsive Grid Layout */
+        .grid {
+            display: grid;
+            /* Creates as many columns as fit, each at least 220px wide */
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
         .btn {
-            display: block;
-            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 90px; /* Keeps all grid cards the exact same height */
             background-color: #21262d;
             color: #58a6ff;
             border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin-bottom: 16px;
+            border-radius: 10px;
+            padding: 20px 16px;
             font-size: 1rem;
             font-weight: 600;
             text-decoration: none;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
         }
 
         .btn:hover {
             background-color: #30363d;
             border-color: #8b949e;
+            transform: translateY(-2px); /* Subtle lift effect on hover */
         }
 
         .subtext {
@@ -59,93 +70,110 @@
             font-size: 0.75rem;
             font-weight: 400;
             color: #8b949e;
-            margin-top: 4px;
+            margin-top: 6px;
+        }
+
+        /* Optional: Make it a 2-column grid on slightly larger phones */
+        @media (max-width: 500px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+                gap: 12px;
+            }
+            .btn {
+                padding: 16px 12px;
+                font-size: 0.95rem;
+            }
         }
     </style>
     <!-- iOS PWA Settings -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="My Projects">
-<link rel="apple-touch-icon" href="icon-512.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="My Projects">
+    <link rel="apple-touch-icon" href="icon-512.png">
 </head>
 <body>
 
     <div class="container">
         <h1>Some of my projects</h1>
 
-        <a href="https://nextiletext.github.io/NextOS/" target="_blank" class="btn">
-            NextOS
-            <span class="subtext">(Desktop Recommended)</span>
-        </a>
+        <div class="grid">
+            <a href="https://nextiletext.github.io/NextOS/" target="_blank" class="btn">
+                NextOS
+                <span class="subtext">(Desktop Recommended)</span>
+            </a>
 
-        <a href="https://nextiletext.github.io/Dino-Tracker/" target="_blank" class="btn">
-            Dino Tracker
-        </a>
+            <a href="https://nextiletext.github.io/Dino-Tracker/" target="_blank" class="btn">
+                Dino Tracker
+            </a>
 
-        <a href="https://nextiletext.github.io/Number-Guessing-Game" target="_blank" class="btn">
-            Number Guessing Game
-        </a>
+            <a href="https://nextiletext.github.io/Number-Guessing-Game" target="_blank" class="btn">
+                Number Guessing Game
+            </a>
 
-        <a href="https://nextiletext.github.io/jurassic-park-website/" target="_blank" class="btn">
-            Jurassic World
-        </a>
+            <a href="https://nextiletext.github.io/jurassic-park-website/" target="_blank" class="btn">
+                Jurassic World
+            </a>
 
-        <a href="https://nextiletext.github.io/Weather-app3/" target="_blank" class="btn">
-            Weather App
-        </a>
+            <a href="https://nextiletext.github.io/Weather-app3/" target="_blank" class="btn">
+                Weather App
+            </a>
 
-        <a href="https://nextiletext.github.io/VoxelCraft3D/" traget="_blank" class="btn">
-            Minecraft (replica edition by me)
-        </a>
+            <a href="https://nextiletext.github.io/VoxelCraft3D/" target="_blank" class="btn">
+                Minecraft
+                <span class="subtext">(replica edition by me)</span>
+            </a>
 
-        <a href="https://nextiletext.github.io/ninjago-info/" target="_blank" class="btn">
-            Ninjago
-        </a>
+            <a href="https://nextiletext.github.io/ninjago-info/" target="_blank" class="btn">
+                Ninjago
+            </a>
 
-        <a href="https://nextiletext.github.io/search/" target="_blank" class="btn">
-            MyGoogle
-        </a>
+            <a href="https://nextiletext.github.io/search/" target="_blank" class="btn">
+                MyGoogle
+            </a>
 
-        <a href="https://nextiletext.github.io/Recall-Deck/" target="_blank" class="btn">
-            Recall Deck (Revision site that i used)
-        <a/>
+            <a href="https://nextiletext.github.io/Recall-Deck/" target="_blank" class="btn">
+                Recall Deck
+                <span class="subtext">(Revision site that I used)</span>
+            </a>
 
-        <a href="https://nextiletext.github.io/Secret/" target="_blank" class="btn">
-            something suspicious
-        </a>
+            <a href="https://nextiletext.github.io/Secret/" target="_blank" class="btn">
+                something suspicious
+            </a>
+        </div>
     </div>
+
     <script>
-    window.addEventListener('load', function() {
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+        window.addEventListener('load', function() {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
 
-        // Displays a pop-up only for iOS web users
-        if (isIOS && !isStandalone) {
-            alert("If you want to save this space to your iPhone home screen:\n\n1. Tap the Share icon in Safari.\n2. Tap 'Add to Home Screen'.");
-        }
-    });
-</script>
-<script>
-    let deferredPrompt;
+            // Displays a pop-up only for iOS web users
+            if (isIOS && !isStandalone) {
+                alert("If you want to save this space to your iPhone home screen:\n\n1. Tap the Share icon in Safari.\n2. Tap 'Add to Home Screen'.");
+            }
+        });
+    </script>
+    <script>
+        let deferredPrompt;
 
-    // Detects Android Chrome / Edge install availability
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
+        // Detects Android Chrome / Edge install availability
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
 
-        // Prompt the user to install your main app hub
-        const installApp = confirm("Would you like to install My Projects App to your home screen?");
-        
-        if (installApp) {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('User installed the app');
-                }
-                deferredPrompt = null;
-            });
-        }
-    });
-</script>
+            // Prompt the user to install your main app hub
+            const installApp = confirm("Would you like to install My Projects App to your home screen?");
+            
+            if (installApp) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User installed the app');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
