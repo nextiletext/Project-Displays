@@ -22,14 +22,70 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            /* Extra bottom padding so the floating audio bar never covers your last cards */
-            padding: 40px 16px 110px 16px;
+            padding: 40px 16px 120px 16px;
+            overflow-x: hidden;
+        }
+
+        /* Click to Enter Overlay */
+        #entryOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(9, 12, 16, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #entryOverlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .enter-btn {
+            background: rgba(22, 27, 34, 0.85);
+            color: #f0f6fc;
+            border: 1px solid rgba(88, 166, 255, 0.5);
+            border-radius: 16px;
+            padding: 22px 36px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(88, 166, 255, 0.2);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        border-color 0.2s ease, 
+                        box-shadow 0.2s ease,
+                        color 0.2s ease;
+        }
+
+        .enter-btn:hover {
+            transform: scale(1.05);
+            border-color: #58a6ff;
+            color: #58a6ff;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 32px rgba(88, 166, 255, 0.35);
+        }
+
+        .enter-btn:active {
+            transform: scale(0.98);
         }
 
         .container {
             width: 100%;
             max-width: 840px;
             text-align: center;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s;
+        }
+
+        .container.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         h1 {
@@ -131,105 +187,72 @@
             color: #d2a8ff;
         }
 
-        /* Floating Glassmorphic Audio Pill */
-        .audio-dock {
+        /* Floating Rotary Volume Knob Dock */
+        .knob-dock {
             position: fixed;
-            bottom: 24px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             background: rgba(22, 27, 34, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(48, 54, 61, 0.9);
             border-radius: 999px;
-            padding: 10px 20px;
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 15px rgba(88, 166, 255, 0.1);
+            padding: 8px 18px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 15px rgba(88, 166, 255, 0.12);
             z-index: 100;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .audio-dock:hover {
-            border-color: rgba(88, 166, 255, 0.5);
-        }
-
-        .play-btn {
-            background: rgba(33, 38, 45, 0.9);
-            color: #58a6ff;
-            border: 1px solid rgba(88, 166, 255, 0.4);
-            border-radius: 999px;
-            padding: 6px 14px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .play-btn:hover {
-            background: #58a6ff;
-            color: #090c10;
-            box-shadow: 0 0 12px rgba(88, 166, 255, 0.4);
-        }
-
-        .play-btn.active {
-            background: rgba(88, 166, 255, 0.2);
-            border-color: #58a6ff;
-            color: #79c0ff;
-        }
-
-        /* Custom Volume Slider */
-        .volume-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .vol-label {
-            font-size: 0.75rem;
-            color: #8b949e;
-            font-weight: 500;
             user-select: none;
+            touch-action: none;
         }
 
-        input[type="range"].volume-slider {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 90px;
-            height: 5px;
-            background: rgba(48, 54, 61, 0.9);
-            border-radius: 999px;
-            outline: none;
-            cursor: pointer;
+        .knob-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
         }
 
-        input[type="range"].volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 14px;
-            height: 14px;
+        .knob-dial {
+            position: relative;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: #58a6ff;
-            border: 2px solid #090c10;
-            box-shadow: 0 0 8px rgba(88, 166, 255, 0.6);
-            cursor: pointer;
-            transition: transform 0.15s ease;
+            background: radial-gradient(circle at 30% 30%, #2d333b, #161b22);
+            border: 2px solid #58a6ff;
+            box-shadow: 0 0 12px rgba(88, 166, 255, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            cursor: ns-resize;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        input[type="range"].volume-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
+        .knob-dial:active {
+            box-shadow: 0 0 18px rgba(88, 166, 255, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.15);
         }
 
-        input[type="range"].volume-slider::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #58a6ff;
-            border: 2px solid #090c10;
-            box-shadow: 0 0 8px rgba(88, 166, 255, 0.6);
-            cursor: pointer;
+        /* Glowing indicator line inside the knob */
+        .knob-indicator {
+            position: absolute;
+            top: 5px;
+            width: 3px;
+            height: 11px;
+            background: #79c0ff;
+            border-radius: 2px;
+            box-shadow: 0 0 6px #58a6ff;
+            transform-origin: 50% 15px;
+        }
+
+        .knob-value {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #f0f6fc;
+            min-width: 36px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
         }
 
         /* Mobile Adjustments */
@@ -256,13 +279,9 @@
                 font-size: 0.68rem;
                 padding: 2px 8px;
             }
-            .audio-dock {
-                bottom: 16px;
-                padding: 8px 16px;
-                gap: 10px;
-            }
-            input[type="range"].volume-slider {
-                width: 75px;
+            .enter-btn {
+                font-size: 1.05rem;
+                padding: 18px 28px;
             }
         }
     </style>
@@ -274,7 +293,12 @@
 </head>
 <body>
 
-    <div class="container">
+    <!-- Click to View Projects Overlay -->
+    <div id="entryOverlay">
+        <button id="enterBtn" class="enter-btn">Click to view projects</button>
+    </div>
+
+    <div id="mainContent" class="container">
         <h1>Some of my projects</h1>
 
         <div class="grid">
@@ -327,24 +351,28 @@
         </div>
     </div>
 
-    <!-- Floating Chill Audio Player -->
-    <div class="audio-dock">
-        <button id="playToggle" class="play-btn">Play Chill</button>
-        <div class="volume-wrap">
-            <span class="vol-label">Vol</span>
-            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.4">
+    <!-- Floating Rotary Volume Knob -->
+    <div class="knob-dock">
+        <span class="knob-label">Vol</span>
+        <div id="volumeKnob" class="knob-dial" title="Drag up/down or scroll to adjust volume">
+            <div id="knobIndicator" class="knob-indicator"></div>
         </div>
+        <span id="knobValue" class="knob-value">40%</span>
     </div>
 
     <script>
-        // Built-in Chill Synth Generator (No MP3 file needed)
         let audioCtx;
         let masterGain;
         let isPlaying = false;
         let chordInterval;
+        let volume = 0.4; // Default 40%
 
-        const playBtn = document.getElementById('playToggle');
-        const volumeSlider = document.getElementById('volumeSlider');
+        const entryOverlay = document.getElementById('entryOverlay');
+        const enterBtn = document.getElementById('enterBtn');
+        const mainContent = document.getElementById('mainContent');
+        const volumeKnob = document.getElementById('volumeKnob');
+        const knobIndicator = document.getElementById('knobIndicator');
+        const knobValue = document.getElementById('knobValue');
 
         // Dreamy Lo-Fi Maj7 / Min9 chord frequencies
         const chords = [
@@ -365,13 +393,11 @@
                 const filter = audioCtx.createBiquadFilter();
 
                 osc.type = 'triangle';
-                // Slight detune for warm analog tape feel
                 osc.frequency.setValueAtTime(freq + (Math.random() * 1.2 - 0.6), now);
 
                 filter.type = 'lowpass';
                 filter.frequency.setValueAtTime(650, now);
 
-                // Smooth fade in and fade out
                 noteGain.gain.setValueAtTime(0.001, now);
                 noteGain.gain.linearRampToValueAtTime(0.12, now + 1.2);
                 noteGain.gain.exponentialRampToValueAtTime(0.001, now + 4.2);
@@ -389,16 +415,15 @@
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 masterGain = audioCtx.createGain();
-                masterGain.gain.setValueAtTime(volumeSlider.value, audioCtx.currentTime);
+                masterGain.gain.setValueAtTime(volume, audioCtx.currentTime);
                 masterGain.connect(audioCtx.destination);
             }
             if (audioCtx.state === 'suspended') {
                 audioCtx.resume();
             }
 
+            if (isPlaying) return;
             isPlaying = true;
-            playBtn.textContent = 'Pause';
-            playBtn.classList.add('active');
 
             playChord(chords[chordIndex]);
             chordIndex = (chordIndex + 1) % chords.length;
@@ -409,25 +434,55 @@
             }, 3800);
         }
 
-        function stopChillAudio() {
-            isPlaying = false;
-            clearInterval(chordInterval);
-            playBtn.textContent = 'Play Chill';
-            playBtn.classList.remove('active');
-        }
-
-        playBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                stopChillAudio();
-            } else {
-                startChillAudio();
-            }
+        // Click to Enter Handler
+        enterBtn.addEventListener('click', () => {
+            entryOverlay.classList.add('hidden');
+            mainContent.classList.add('visible');
+            startChillAudio();
         });
 
-        volumeSlider.addEventListener('input', (e) => {
+        // Rotary Knob Logic (-135deg = 0%, +135deg = 100%)
+        function updateKnobVisuals() {
+            const angle = -135 + (volume * 270);
+            knobIndicator.style.transform = `rotate(${angle}deg)`;
+            knobValue.textContent = `${Math.round(volume * 100)}%`;
+
             if (masterGain && audioCtx) {
-                masterGain.gain.setTargetAtTime(e.target.value, audioCtx.currentTime, 0.05);
+                masterGain.gain.setTargetAtTime(volume, audioCtx.currentTime, 0.05);
             }
+        }
+
+        // Initialize knob angle at 40%
+        updateKnobVisuals();
+
+        let isDragging = false;
+        let startY = 0;
+        let startVol = volume;
+
+        volumeKnob.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            startY = e.clientY;
+            startVol = volume;
+            volumeKnob.setPointerCapture(e.pointerId);
+        });
+
+        window.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            const deltaY = startY - e.clientY; // Drag up = louder, drag down = quieter
+            volume = Math.min(1, Math.max(0, startVol + deltaY / 120));
+            updateKnobVisuals();
+        });
+
+        window.addEventListener('pointerup', () => {
+            isDragging = false;
+        });
+
+        // Also support mouse scroll wheel on the knob
+        volumeKnob.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const step = e.deltaY < 0 ? 0.05 : -0.05;
+            volume = Math.min(1, Math.max(0, volume + step));
+            updateKnobVisuals();
         });
     </script>
 
