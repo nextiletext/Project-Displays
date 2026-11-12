@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY PROJECTS</title>
+    <title>Some of my projects</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,75 +13,147 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0d1117;
+            background-color: #090c10;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(56, 139, 253, 0.15) 0%, transparent 55%),
+                radial-gradient(circle at 85% 90%, rgba(163, 113, 247, 0.08) 0%, transparent 45%);
             color: #c9d1d9;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 24px 16px;
+            padding: 40px 16px;
         }
 
         .container {
             width: 100%;
-            max-width: 800px; /* Widened so the grid has room to breathe on desktop */
+            max-width: 840px;
             text-align: center;
         }
 
         h1 {
-            font-size: 1.8rem;
-            color: #f0f6fc;
-            margin-bottom: 32px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 30%, #79c0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 36px;
         }
 
         /* Responsive Grid Layout */
         .grid {
             display: grid;
-            /* Creates as many columns as fit, each at least 220px wide */
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
             gap: 16px;
         }
 
         .btn {
+            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 90px; /* Keeps all grid cards the exact same height */
-            background-color: #21262d;
-            color: #58a6ff;
-            border: 1px solid #30363d;
-            border-radius: 10px;
+            min-height: 96px;
+            background: rgba(22, 27, 34, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #f0f6fc;
+            border: 1px solid rgba(48, 54, 61, 0.8);
+            border-radius: 14px;
             padding: 20px 16px;
-            font-size: 1rem;
-            font-weight: 600;
             text-decoration: none;
-            transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        background-color 0.2s ease, 
+                        border-color 0.2s ease, 
+                        box-shadow 0.2s ease;
+            overflow: hidden;
+        }
+
+        /* Subtle top highlight edge */
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(88, 166, 255, 0.4), transparent);
+            opacity: 0;
+            transition: opacity 0.2s ease;
         }
 
         .btn:hover {
-            background-color: #30363d;
-            border-color: #8b949e;
-            transform: translateY(-2px); /* Subtle lift effect on hover */
+            background: rgba(33, 38, 45, 0.95);
+            border-color: #58a6ff;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(88, 166, 255, 0.15);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        .title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #f0f6fc;
+            transition: color 0.2s ease;
+        }
+
+        .btn:hover .title {
+            color: #58a6ff;
         }
 
         .subtext {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 400;
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 500;
             color: #8b949e;
-            margin-top: 6px;
+            background: rgba(13, 17, 23, 0.6);
+            border: 1px solid rgba(48, 54, 61, 0.6);
+            border-radius: 999px;
+            padding: 2px 10px;
+            margin-top: 8px;
         }
 
-        /* Optional: Make it a 2-column grid on slightly larger phones */
+        /* Special styling for the secret card */
+        .btn.secret:hover {
+            border-color: #a371f7;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(163, 113, 247, 0.2);
+        }
+        .btn.secret:hover .title {
+            color: #d2a8ff;
+        }
+
+        /* Mobile Adjustments */
         @media (max-width: 500px) {
+            body {
+                padding: 28px 14px;
+            }
+            h1 {
+                font-size: 1.75rem;
+                margin-bottom: 28px;
+            }
             .grid {
-                grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
             }
             .btn {
-                padding: 16px 12px;
-                font-size: 0.95rem;
+                min-height: 86px;
+                padding: 16px 10px;
+            }
+            .title {
+                font-size: 0.92rem;
+            }
+            .subtext {
+                font-size: 0.68rem;
+                padding: 2px 8px;
             }
         }
     </style>
@@ -98,46 +170,46 @@
 
         <div class="grid">
             <a href="https://nextiletext.github.io/NextOS/" target="_blank" class="btn">
-                NextOS
-                <span class="subtext">(Desktop Recommended)</span>
+                <span class="title">NextOS</span>
+                <span class="subtext">Desktop Recommended</span>
             </a>
 
             <a href="https://nextiletext.github.io/Dino-Tracker/" target="_blank" class="btn">
-                Dino Tracker
+                <span class="title">Dino Tracker</span>
             </a>
 
             <a href="https://nextiletext.github.io/Number-Guessing-Game" target="_blank" class="btn">
-                Number Guessing Game
+                <span class="title">Number Guessing Game</span>
             </a>
 
             <a href="https://nextiletext.github.io/jurassic-park-website/" target="_blank" class="btn">
-                Jurassic World
+                <span class="title">Jurassic World</span>
             </a>
 
             <a href="https://nextiletext.github.io/Weather-app3/" target="_blank" class="btn">
-                Weather App
+                <span class="title">Weather App</span>
             </a>
 
             <a href="https://nextiletext.github.io/VoxelCraft3D/" target="_blank" class="btn">
-                Minecraft
-                <span class="subtext">(replica edition by me)</span>
+                <span class="title">Minecraft</span>
+                <span class="subtext">replica edition by me</span>
             </a>
 
             <a href="https://nextiletext.github.io/ninjago-info/" target="_blank" class="btn">
-                Ninjago
+                <span class="title">Ninjago</span>
             </a>
 
             <a href="https://nextiletext.github.io/search/" target="_blank" class="btn">
-                MyGoogle
+                <span class="title">MyGoogle</span>
             </a>
 
             <a href="https://nextiletext.github.io/Recall-Deck/" target="_blank" class="btn">
-                Recall Deck
-                <span class="subtext">(Revision site that I used)</span>
+                <span class="title">Recall Deck</span>
+                <span class="subtext">Revision site that I used</span>
             </a>
 
-            <a href="https://nextiletext.github.io/Secret/" target="_blank" class="btn">
-                something suspicious
+            <a href="https://nextiletext.github.io/Secret/" target="_blank" class="btn secret">
+                <span class="title">something suspicious</span>
             </a>
         </div>
     </div>
@@ -147,7 +219,6 @@
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
 
-            // Displays a pop-up only for iOS web users
             if (isIOS && !isStandalone) {
                 alert("If you want to save this space to your iPhone home screen:\n\n1. Tap the Share icon in Safari.\n2. Tap 'Add to Home Screen'.");
             }
@@ -156,12 +227,10 @@
     <script>
         let deferredPrompt;
 
-        // Detects Android Chrome / Edge install availability
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
 
-            // Prompt the user to install your main app hub
             const installApp = confirm("Would you like to install My Projects App to your home screen?");
             
             if (installApp) {
